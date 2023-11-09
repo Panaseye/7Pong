@@ -9,35 +9,58 @@ public class rightStick : MonoBehaviour
     [SerializeField] float border = 3.45f;
 
     public gameManager gameManager;
+    public GameSettings gameSettings;
 
     // Start is called before the first frame update
     void Start()
     {
+        gameSettings = Resources.Load<GameSettings>("gameSettings");
         gameManager = gameManager = FindObjectOfType<gameManager>();
 
-        speed = gameManager.stickSpeed;
+        speed = gameSettings.stickSpeed;
     }
 
     // Update is called once per frame
     void Update()
     {
-        verticalInput = Input.GetAxis("Vertical");
+        if (gameObject.transform.position.x > 0)
+        {
+            verticalInput = Input.GetAxis("Vertical");
 
-        transform.Translate(Vector3.up * Time.deltaTime * speed * verticalInput);
+            transform.Translate(Vector3.up * Time.deltaTime * speed * verticalInput);
 
-        if (transform.position.y > border )
+            LimitsControll();
+
+
+        } else if (gameObject.transform.position.x < 0)
+        {
+            verticalInput = Input.GetAxis("VerticalLeft");
+
+            transform.Translate(Vector3.up * Time.deltaTime * speed * verticalInput);
+
+            LimitsControll();
+
+        }
+        
+
+
+    }
+
+    private void LimitsControll()
+    {
+        if (transform.position.y > border)
         {
             transform.position = new Vector3(transform.position.x, border, transform.position.z);
         }
 
-        if (transform.position.y < - border)
+        if (transform.position.y < -border)
         {
             transform.position = new Vector3(transform.position.x, -border, transform.position.z);
         }
+
+
     }
 
-   
-              
-    
+
 }
 

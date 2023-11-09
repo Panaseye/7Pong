@@ -5,18 +5,18 @@ using UnityEngine.UI;
 using TMPro;
 public class ball : MonoBehaviour
 {
-    
-    private Rigidbody2D ballRb;
-    public float forceMagnitude;
-    [SerializeField] float speedMultiplayer;
+    public GameSettings gameSettings;
+    public spawnManager spawnManager;
 
+    private Rigidbody2D ballRb;
+    
     [SerializeField] float xForVector;
     [SerializeField] float yForVector;
     
     [SerializeField] float angleBorders = 0.35f;
     // [SerializeField] bool goneThrough = false;
 
-    public gameManager gameManager;
+    
 
     
     public bool boom = false;
@@ -24,19 +24,20 @@ public class ball : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        gameManager = gameManager = FindObjectOfType<gameManager>();
+        
+        gameSettings = Resources.Load<GameSettings>("gameSettings");
+        spawnManager = GameObject.Find("spawnManager").GetComponent<spawnManager>();
 
-        forceMagnitude = gameManager.forceMagnitude;
-        speedMultiplayer = gameManager.speedMultiplayer;
+
 
         ballRb = GetComponent<Rigidbody2D>();
         
        
         // Apply the force to the ball with constant magnitude
-        ballRb.AddForce(GetRandomVector() * forceMagnitude, ForceMode2D.Impulse);
+        ballRb.AddForce(GetRandomVector() * gameSettings.forceMagnitude, ForceMode2D.Impulse);
         boom = false;
-        
-        gameManager.count = 1;
+
+        gameSettings.count = 1;
     }
 
 
@@ -72,10 +73,10 @@ public class ball : MonoBehaviour
             
             if (transform.position.x > 0)
             {
-                gameManager.leftScore++;
+                gameSettings.leftScore++;
                 Destroy(gameObject);
             }
-            else gameManager.rightScore++; Destroy(gameObject);
+            else gameSettings.rightScore++; Destroy(gameObject);
 
         }
 
@@ -86,7 +87,7 @@ public class ball : MonoBehaviour
             
             {
 
-                ballRb.velocity = GetNewBallTrajectory(collision) * (1+(float)gameManager.count / speedMultiplayer) * forceMagnitude;
+                ballRb.velocity = GetNewBallTrajectory(collision) * (1+(float)gameSettings.count / gameSettings.speedMultiplayer) * gameSettings.forceMagnitude;
 
             }
 
@@ -96,14 +97,39 @@ public class ball : MonoBehaviour
 
             }
 
-            gameManager.count++;
+            gameSettings.count++;
 
-            if (IsMultipleOrContains(gameManager.count))
+            if (gameSettings.boomNum != 0)
             {
-                boom = true;
+                if (IsMultipleOrContains(gameSettings.count))
+                {
+                    boom = true;
+                    if (gameSettings.boomNumIndicator)
+                    {
+                        Debug.Log("i am!");
+                        spawnManager.countText.color = Color.red;
+                        spawnManager.countText.text = "boom!";
+                    }
+                    
+                    
+
+                }
+                else { 
+                  boom = false;
+                  
+                  spawnManager.countText.color = Color.white;
+                }
+                    
+                
+                
+                Debug.Log(gameSettings.count + "boom" + boom);
+
             }
-            else boom = false;
-            Debug.Log(gameManager.count + "boom"+ boom);
+            
+                
+
+            
+            
             
 
         }
@@ -114,7 +140,7 @@ public class ball : MonoBehaviour
 
     public bool IsMultipleOrContains(int number)
     {
-        return number % gameManager.boomNum == 0 || number.ToString().Contains(gameManager.boomNum.ToString());
+        return number % gameSettings.boomNum == 0 || number.ToString().Contains(gameSettings.boomNum.ToString());
     }
 
     public Vector3 GetRandomVector()

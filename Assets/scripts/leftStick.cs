@@ -13,7 +13,7 @@ public class leftStick : MonoBehaviour
     {
         gameManager = gameManager = FindObjectOfType<gameManager>();
 
-        speed = gameManager.stickSpeed;
+        //speed = gameManager.stickSpeed;
     }
 
     // Update is called once per frame
