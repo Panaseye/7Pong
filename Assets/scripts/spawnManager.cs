@@ -18,19 +18,17 @@ public class spawnManager : MonoBehaviour
 
     private bool isPaused = false;
     
-    public int leftScore ;
-    public int rightScore ;
+    
     
     public GameObject ballPrefab;
     public Vector2 spawnPoint = Vector2.zero;
     public float delayBeforeSpawn = 2f;
 
-    public gameManager gameManager;
+    
     // Start is called before the first frame update
     void Start()
     {
         gameSettings = Resources.Load<GameSettings>("gameSettings");
-        gameManager = gameManager = FindObjectOfType<gameManager>();
         StartCoroutine(CheckAndSpawnBall());
         if (gameSettings.showBoomNum)
         {

@@ -11,10 +11,6 @@ public class gameManager : MonoBehaviour
     
     
     
-    [SerializeField] Toggle boomSystem;
-    //[SerializeField] TMP_InputField boomNumInput;
-    [SerializeField] Slider boomNumInput;
-
 
 
 

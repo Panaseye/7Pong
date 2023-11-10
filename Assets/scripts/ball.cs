@@ -14,8 +14,7 @@ public class ball : MonoBehaviour
     [SerializeField] float yForVector;
     
     [SerializeField] float angleBorders = 0.35f;
-    // [SerializeField] bool goneThrough = false;
-
+  
     
 
     
@@ -31,8 +30,8 @@ public class ball : MonoBehaviour
 
 
         ballRb = GetComponent<Rigidbody2D>();
-        
-       
+        spawnManager.countText.color = Color.white;
+
         // Apply the force to the ball with constant magnitude
         ballRb.AddForce(GetRandomVector() * gameSettings.forceMagnitude, ForceMode2D.Impulse);
         boom = false;
@@ -44,31 +43,18 @@ public class ball : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        
+        if (transform.position.x < 5 && transform.position.x > -5)
+        {
+            Physics2D.IgnoreLayerCollision(6, 3,false);
+        }
     }
 
     void OnCollisionEnter2D (Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("stick"))
-        {
-            bool ignoreCondition = (ballRb.velocity.x > 0 && transform.position.x < -10.2f) || (ballRb.velocity.x < 0 && transform.position.x > 10.2f);
-
-            if (ignoreCondition)
-                
-            {
-
-                Physics2D.IgnoreCollision(GetComponent<Collider2D>(), collision.gameObject.GetComponent<Collider2D>());
-
-                Debug.Log("NOT not" + ignoreCondition);
-            }
+        bool ignoreCondition = (((ballRb.velocity.x > 0 && transform.position.x > 0f) || (ballRb.velocity.x < 0 && transform.position.x < 0f)));
 
 
-        }
-
-           
-        
-
-        if ((collision.gameObject.CompareTag("goal") && !boom) || (collision.gameObject.CompareTag("stick") && boom))
+        if ((collision.gameObject.CompareTag("goal") && !boom) || (collision.gameObject.CompareTag("stick") && boom && !ignoreCondition))
         {
             
             if (transform.position.x > 0)
@@ -83,7 +69,7 @@ public class ball : MonoBehaviour
         if ((collision.gameObject.CompareTag("stick")&& !boom) || (collision.gameObject.CompareTag("goal") && boom))
         {
 
-            if (collision.gameObject.CompareTag("stick") && !boom)
+            if (collision.gameObject.CompareTag("stick") && !boom && !ignoreCondition)
             
             {
 
@@ -93,7 +79,12 @@ public class ball : MonoBehaviour
 
             if (collision.gameObject.CompareTag("goal") && boom)
             {
-                transform.position = new Vector3(0f, transform.position.y, transform.position.z);
+                if (gameSettings.gameTypeTeleport) 
+                {
+                    transform.position = new Vector3(0f, transform.position.y, transform.position.z);
+                }
+                else Physics2D.IgnoreLayerCollision(6, 3);
+
 
             }
 
@@ -106,7 +97,7 @@ public class ball : MonoBehaviour
                     boom = true;
                     if (gameSettings.boomNumIndicator)
                     {
-                        Debug.Log("i am!");
+                       
                         spawnManager.countText.color = Color.red;
                         spawnManager.countText.text = "boom!";
                     }
@@ -136,6 +127,15 @@ public class ball : MonoBehaviour
         
 
 
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("stick"))
+        {
+            Physics2D.IgnoreLayerCollision(6, 3, false);
+
+        }
     }
 
     public bool IsMultipleOrContains(int number)

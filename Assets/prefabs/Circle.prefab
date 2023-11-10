@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5916393779041678328}
   - component: {fileID: 2653498560565458178}
   - component: {fileID: 4798208826880541144}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Circle
   m_TagString: ball
   m_Icon: {fileID: 0}
@@ -134,13 +134,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9c82a033d6c41b428e50cdb7f520d11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  forceMagnitude: 10
+  gameSettings: {fileID: 11400000, guid: 85a6c6d7709557e499d34b1b14d8a4c7, type: 2}
+  spawnManager: {fileID: 0}
   xForVector: 0
   yForVector: 0
-  speedMultiplayer: 1.03
   angleBorders: 0.35
-  gameManager: {fileID: 0}
-  count: 0
+  goneThrough: 0
   boom: 0
 --- !u!50 &4798208826880541144
 Rigidbody2D:

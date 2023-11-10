@@ -11,7 +11,7 @@ public class GameSettings : ScriptableObject
 
     public bool boomNumIndicator = true;
     public bool showBoomNum = true;
-
+    public bool gameTypeTeleport = false;
     
 
 

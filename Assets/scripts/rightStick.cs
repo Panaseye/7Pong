@@ -8,14 +8,14 @@ public class rightStick : MonoBehaviour
     [SerializeField] float speed;
     [SerializeField] float border = 3.45f;
 
-    public gameManager gameManager;
+   
     public GameSettings gameSettings;
 
     // Start is called before the first frame update
     void Start()
     {
         gameSettings = Resources.Load<GameSettings>("gameSettings");
-        gameManager = gameManager = FindObjectOfType<gameManager>();
+        
 
         speed = gameSettings.stickSpeed;
     }

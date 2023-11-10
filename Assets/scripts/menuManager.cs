@@ -18,6 +18,10 @@ public class menuManager : MonoBehaviour
     [SerializeField] Slider ballSpeedInput;
     [SerializeField] TextMeshProUGUI ballSpeedText;
 
+    [SerializeField] Toggle gameTypeInput;
+    [SerializeField] TextMeshProUGUI gameTypeInputText;
+
+
     [SerializeField] Toggle showBoomNumToggle;
     [SerializeField] Toggle BoomNumIndicatorToggle;
 
@@ -100,6 +104,23 @@ public class menuManager : MonoBehaviour
         showBoomNumToggle.isOn = gameSettings.showBoomNum;
         BoomNumIndicatorToggle.isOn = gameSettings.boomNumIndicator;
         ballSpeedInput.value = gameSettings.forceMagnitude / 4;
+        gameTypeInput.isOn = gameSettings.gameTypeTeleport;
+
+    }
+
+    public void ResetScore()
+    {
+        gameSettings.leftScore = 0;
+        gameSettings.rightScore = 0;
+    }
+
+    public void GameType()
+    {
+        gameSettings.gameTypeTeleport = gameTypeInput.isOn;
+        if (gameTypeInput.isOn)
+        {
+            gameTypeInputText.text = "teleport ball";
+        } else gameTypeInputText.text = "squash ball";
 
     }
 
