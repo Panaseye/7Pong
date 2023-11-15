@@ -12,6 +12,10 @@ public class GameSettings : ScriptableObject
     public bool boomNumIndicator = true;
     public bool showBoomNum = true;
     public bool gameTypeTeleport = false;
+
+    public bool isMultiplayer = false;
+
+    public float enemySpeed = 6;
     
 
 

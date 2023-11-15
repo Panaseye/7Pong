@@ -17,8 +17,8 @@ public class spawnManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI boomNumText;
 
     private bool isPaused = false;
-    
-    
+
+    public GameObject currentBall;
     
     public GameObject ballPrefab;
     public Vector2 spawnPoint = Vector2.zero;
@@ -90,6 +90,8 @@ public class spawnManager : MonoBehaviour
             {
                 // Instantiate a new ball at the spawn point
                 Instantiate(ballPrefab, spawnPoint, Quaternion.identity);
+
+                
             }
         }
     }

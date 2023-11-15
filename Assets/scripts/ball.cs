@@ -7,6 +7,7 @@ public class ball : MonoBehaviour
 {
     public GameSettings gameSettings;
     public spawnManager spawnManager;
+   
 
     private Rigidbody2D ballRb;
     
@@ -27,6 +28,7 @@ public class ball : MonoBehaviour
         gameSettings = Resources.Load<GameSettings>("gameSettings");
         spawnManager = GameObject.Find("spawnManager").GetComponent<spawnManager>();
 
+        
 
 
         ballRb = GetComponent<Rigidbody2D>();
@@ -37,6 +39,9 @@ public class ball : MonoBehaviour
         boom = false;
 
         gameSettings.count = 1;
+
+        spawnManager.currentBall = gameObject;
+
     }
 
 

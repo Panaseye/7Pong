@@ -21,6 +21,9 @@ public class menuManager : MonoBehaviour
     [SerializeField] Toggle gameTypeInput;
     [SerializeField] TextMeshProUGUI gameTypeInputText;
 
+    [SerializeField] Toggle multiplayerInput;
+    [SerializeField] TextMeshProUGUI multiplayerInputText;
+
 
     [SerializeField] Toggle showBoomNumToggle;
     [SerializeField] Toggle BoomNumIndicatorToggle;
@@ -105,7 +108,7 @@ public class menuManager : MonoBehaviour
         BoomNumIndicatorToggle.isOn = gameSettings.boomNumIndicator;
         ballSpeedInput.value = gameSettings.forceMagnitude / 4;
         gameTypeInput.isOn = gameSettings.gameTypeTeleport;
-
+        multiplayerInput.isOn = gameSettings.isMultiplayer;
     }
 
     public void ResetScore()
@@ -121,6 +124,17 @@ public class menuManager : MonoBehaviour
         {
             gameTypeInputText.text = "teleport ball";
         } else gameTypeInputText.text = "squash ball";
+
+    }
+
+    public void IsMultiplayer()
+    {
+        gameSettings.isMultiplayer = multiplayerInput.isOn;
+        if (multiplayerInput.isOn)
+        {
+            multiplayerInputText.text = "multyplayer";
+        }
+        else multiplayerInputText.text = "single player";
 
     }
 
